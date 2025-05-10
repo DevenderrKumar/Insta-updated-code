@@ -8,8 +8,32 @@ import re
 from datetime import datetime
 from bs4 import BeautifulSoup as bs
 import pandas as pd
+import time
+import logging
+import pymongo,datetime
+from datetime import datetime
+from datetime import timedelta
+from collections import Counter
+
+import argparse
+import re,os,json,requests
+import pymongo,datetime
+from google.cloud import storage
+import hashlib
+import os
+import dateutil.parser as dp
+
+# import cv2
+import numpy as np
+from warnings import filterwarnings
+import random
+import pdb
+from datetime import datetime
+from multiprocessing import Process
+from fake_headers import Headers
 
 flag = True
+
 
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0',
@@ -57,7 +81,7 @@ GotReels = list()
 
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = client["GermanColla_DBr"]
+mydb = client["ViralPitch_Intagram_Scraper"]
 Likes_ = mydb["Intagram_likes_new"]
 Suggessions = mydb["Intagram_Suggessions_new"]
 Reels = mydb["Intagram_Reels_new"]
@@ -121,6 +145,22 @@ class GetAllSuggessions:
             logging.error("Error in Create_Database_connect_with_data :- {}".format(e))
             pass
 
+    def getBucketProfile(self, item):
+        # os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/var/live/gtranslateapi-d9895ca275db.json"
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/mac/Desktop/scraping Project/ScrapInstagram/gtranslateapi-d9895ca275db.json"
+        bucket_name = "liveprofiledata"
+        storage_client = storage.Client()
+        BUCKET = storage_client.bucket(bucket_name)
+        try:
+            filename = 'live_'+str(item)+'_live.json'
+            #print(filename)
+            blob = BUCKET.blob(filename)
+            if blob:
+                data = json.loads(blob.download_as_string(client=None))
+        except Exception as er :
+            opi=1
+            data={}
+        return data
 
 
     def GetReels(self,product_id,PRCODE):
@@ -388,16 +428,16 @@ class GetAllSuggessions:
                             self.GetSugessions(api_url,options["ProfileCode"],LogingCookies) # Getting Seggessions profiles from profiles 
                         
                         # Get all Likes. It needs to be 1 for Getting the likes
-                        # if options["GetLIkes"] == 1:
-                        #     # GetLikesCookies = response.cookies.get_dict()
-                        #     self.GetLIkes(item["post_id"].split("_")[0],item["Post_url"],userpass,LogingCookies,options["ProfileCode"])
+                        if options["GetLIkes"] == 1:
+                            # GetLikesCookies = response.cookies.get_dict()
+                            self.GetLIkes(item["post_id"].split("_")[0],item["Post_url"],userpass,LogingCookies,options["ProfileCode"])
 
 
 
                         # Get all comments. It needs to be 1 for Getting the Comments
-                        if options["CommentsScrape"] == 1:
-                            self.GetCommentFirstPage(item["post_id"],item["Post_url"],LogingCookies,userpass)
-                            self.GetLIkes(item["post_id"].split("_")[0],LogingCookies,item["Post_url"])
+                        # if options["CommentsScrape"] == 1:
+                        #     self.GetCommentFirstPage(item["post_id"],item["Post_url"],LogingCookies,userpass)
+                            # self.GetLIkes(item["post_id"].split("_")[0],LogingCookies,item["Post_url"])
 
                 except Exception as e:
                     print("Error in products data :- {}".format(e))
@@ -549,23 +589,36 @@ class GetAllSuggessions:
 
 # _Prfofile_urls = ["https://www.instagram.com/p/CkvgGBHtpBg/","rezzaut","gojooosatoru259","everything_my_bro","sisodiya___jyoti","mo_hini_8145","girija_partap_0007"]
 
-_Prfofile_urls = [{"ProfileCode":"jayfashionfinds","ProfileScrape":1,"SuggessionScrape":1,"CommentsScrape":1,"GetLIkes":1,"GetReels":1}]
+# _Prfofile_urls = [{"ProfileCode":"emmawatson","ProfileScrape":1,"SuggessionScrape":1,"CommentsScrape":1,"GetLIkes":1,"GetReels":1}]
 
-# _Prfofile_urls = [{"ProfileCode":"khaby00","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":" ","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"lelepons","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"chiaraferragni","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"sommerray","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"camerondallas","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"zachking","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"amandacerny","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
-#                   {"ProfileCode":"mrbeast","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},]
+_Prfofile_urls = [{"ProfileCode":"khaby00","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":" ","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"lelepons","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"chiaraferragni","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"sommerray","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"camerondallas","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"zachking","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"amandacerny","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},
+                  {"ProfileCode":"mrbeast","ProfileScrape":1,"SuggessionScrape":1,"GetLIkes":1,"GetReels":1},]
 
 
 
 # Creating Objects for Class and calling the function For starting the PROGRAM
 obj = GetAllSuggessions()
 obj.StartProcess(_Prfofile_urls)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -580,3 +633,6 @@ obj.StartProcess(_Prfofile_urls)
 #     profile_data.append(_Prfofile_urls)
 
 # obj.StartProcess(profile_data)
+
+           
+            
