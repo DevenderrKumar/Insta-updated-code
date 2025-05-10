@@ -71,7 +71,7 @@ class GetAllSuggessions:
         self.NextParams = {'can_support_threading': 'true','min_id': '{"cached_comments_cursor": "17981506852884848", "bifilter_token": "KHkAgXZAYGzlPwAikDiHS3w_AGKcowkqxj8AxHAfbU3JPwBGnnieXBVBAOhTDfMlzz8A12b9tQeMPwALlfiPnMY_AG53PWgqhT8ArreKnSjVPwAx7KwrAsc_ANMnck3v_D8A9QkzLsnBQABXEnc3RpI_ALlE5FS-3z8AAA=="}'}
         self.post_url = "https://www.instagram.com/p/{}/"
         self.profile_url = "https://www.instagram.com/{}/"
-        self.user_pass = [{'username':'devender85068202522023','password':'Dev@1234'}]
+        self.user_pass = [{'username':'','password':''}]
         self.next_comments_params = {'can_support_threading': 'true','min_id': '{"server_cursor": "QVFDWDZGTW1UeTZFX3hyM2dzSG8wcjN5dDlVYmVKZzZ0MnVyaWsyWGh5TkQ4WW5qSkI1a0dZVHN4OVN3Ry1jcTlpNlBIQXFnelJHUmhMRGRpU1Y5RXV1OFFhYjNHaXpZMHFVQTdVUTA2VnNoSEE=", "is_server_cursor_inverse": true}',}
         self.comments_headers = {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0',

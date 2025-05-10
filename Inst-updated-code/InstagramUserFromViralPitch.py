@@ -93,10 +93,8 @@ class InstagramScraper(object):
                             {"username":"momam43895","password":"Ajeet@123"},
                             {"username":"tikamo3778","password":"Ajeet@123"},
                             {"username":"cibana8004","password":"Ajeet@123"},
-                            {'username':'ajeetkumar2oiiop','password':'Ajeet@10'},
-                            {'username':'devender85068202522023','password':'Dev@1234'}]
+                            {'username':'ajeetkumar2oiiop','password':'Ajeet@10'}]
 
-        # self.MultipleUsers = [{'username':'ajeetkumar2oiiop','password':'Ajeet@10'},{'username':'devender85068202522023','password':'Dev@1234'}]
         # self.UserInfo = {"username":"ajeetkumar2oiiop","password":"Ajeet@10"}
         # self.MultipleUsers = cred = [{"username":"modata1398","password":"Ajeet@123"},{"username":"migado5632","password":"Ajeet@123"},{"username":"lebih34093","password":"Ajeet@123"},{"username":"momam43895","password":"Ajeet@123"},{"username":"tikamo3778","password":"Ajeet@123"},{"username":"cibana8004","password":"Ajeet@123"}]
         self.NextParams = {'can_support_threading': 'true','min_id': '{"cached_comments_cursor": "17981506852884848", "bifilter_token": "KHkAgXZAYGzlPwAikDiHS3w_AGKcowkqxj8AxHAfbU3JPwBGnnieXBVBAOhTDfMlzz8A12b9tQeMPwALlfiPnMY_AG53PWgqhT8ArreKnSjVPwAx7KwrAsc_ANMnck3v_D8A9QkzLsnBQABXEnc3RpI_ALlE5FS-3z8AAA=="}'}

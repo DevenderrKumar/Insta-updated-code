@@ -65,8 +65,7 @@ class Getcomments:
                             {"username":"momam43895","password":"Ajeet@123"},
                             {"username":"tikamo3778","password":"Ajeet@123"},
                             {"username":"cibana8004","password":"Ajeet@123"},
-                            {'username':'ajeetkumar2oiiop','password':'Ajeet@10'},
-                            {'username':'devender85068202522023','password':'Dev@1234'}]
+                            {'username':'ajeetkumar2oiiop','password':'Ajeet@10'}]
         self.headers = headers
 
 

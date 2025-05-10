@@ -49,7 +49,7 @@ class Getcomments:
         self.NextParams = {'can_support_threading': 'true','min_id': '{"cached_comments_cursor": "17981506852884848", "bifilter_token": "KHkAgXZAYGzlPwAikDiHS3w_AGKcowkqxj8AxHAfbU3JPwBGnnieXBVBAOhTDfMlzz8A12b9tQeMPwALlfiPnMY_AG53PWgqhT8ArreKnSjVPwAx7KwrAsc_ANMnck3v_D8A9QkzLsnBQABXEnc3RpI_ALlE5FS-3z8AAA=="}'}
         self.post_url = "https://www.instagram.com/p/{}/"
         self.profile_url = "https://www.instagram.com/{}/"
-        self.user_pass = [{'username':'devender85068202522023','password':'Dev@1234'}]
+        self.user_pass = [{'username':'','password':''}]
         self.headers = headers
 
 
